@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import "./Layout.css";
 import Banner from './Banner'
+import Content from './Content'
 
 
 class Layout extends Component {
@@ -8,6 +9,7 @@ class Layout extends Component {
     return (
       <div className='layout'>
         <Banner />
+        <Content />
       </div>
     )
   }
