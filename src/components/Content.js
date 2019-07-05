@@ -61,15 +61,18 @@ export default class Content extends Component {
     const { people } = this.state;
     return (
       <div className='content-list--items'>
-        <div className='content-list--items-item'>
-          <div className='content-list--items-name bold'>Name</div>
-          <div className='content-list--items-height bold clickable' onClick={this.toggleButton}>Height &#x25B2;&#x25BC;</div>
-        </div>
+        {
+          this.state.people.length > 0 &&
+          <div className='content-list--items-item'>
+            <div className='content-list--items-name bold'>Name</div>
+            <div className='content-list--items-height bold clickable' onClick={this.toggleButton}>Height &#x25B2;&#x25BC;</div>
+          </div>
+        }
         {
           this.state.people &&
           people.map(person => {
             return (
-              <div className='content-list--items-item'>
+              <div className='content-list--items-item' key={person.name}>
                 <div className='content-list--items-name'>{person.name}</div>
                 <div className='content-list--items-height'>{person.height}</div>
               </div>
@@ -92,7 +95,7 @@ export default class Content extends Component {
             <label className='content-input'>
               <input className='content-input--field' placeholder="search term" type="text" value={this.state.value} onChange={this.handleChange} />
             </label>
-            <input className='content-input--button' type="submit" value="search" onClick={this.searchData} />
+            <input className='content-input--button' type="submit" value="search" onClick={this.searchData} disabled={this.state.value.length > 0 ? false : true} />
           </div>
         </div>
         <div className='content-list'>
