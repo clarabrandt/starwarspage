@@ -5,7 +5,7 @@ export default class Banner extends Component {
   render() {
     return (
       <div className='banner'>
-        <div className='banner-text'>Starwars funclub</div>
+        <div className='banner-text'>Star Wars funclub</div>
       </div>
     )
   }

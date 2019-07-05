@@ -4,6 +4,7 @@
   height: 100vh;
   background-color: rgb(28, 30, 34);
   justify-content: center;
+  min-height: 200px;
 }
 .banner-text {
   font-family: 'helvetica neue';
