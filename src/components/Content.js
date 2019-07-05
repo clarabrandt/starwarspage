@@ -1,38 +1,120 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import "./Content.css"
 
 export default class Content extends Component {
+
+  baseUrl = "htts://localhost:3001/api/search?q=";
+
   constructor(props) {
     super(props);
     this.state = {
-      isOrderAsc: true
+      value: 'force',
+      order: 'ASC',
+      people: [],
     };
 
+    this.handleChange = this.handleChange.bind(this);
+    // this.handleSubmit = this.handleSubmit.bind(this);
     this.toggleButton = this.toggleButton.bind(this);
+    this.searchData = this.searchData.bind(this);
+    this.renderList = this.renderList.bind(this);
   }
 
-  toggleButton(e) {
-    console.log(this.state.isOrderAsc)
-    e.preventDefault();
-    this.setState(state => ({
-      isOrderAsc: !state.isOrderAsc
-    }));
+
+  handleChange(event) {
+    this.setState({
+      value: event.target.value
+    });
   }
-  render() {
+
+  // handleSubmit(event) {
+  //   console.log('A name was submitted: ' + this.state.value);
+  //   event.preventDefault();
+  //   this.setState({
+  //     value: event.target.value
+  //   });
+  //   console.log(this.state.value)
+  // }
+
+
+  toggleButton(e) {
+    e.preventDefault();
+    if (this.state.order === 'ASC') {
+      this.setState({
+        order: 'DESC'
+      })
+    } else {
+      this.setState({
+        order: 'ASC'
+      })
+    }
+  }
+
+
+
+  searchData = () => {
+    const endpoint = `http://localhost:3000/api/search?q=${this.state.value}&order=${this.state.order}`;
+    return fetch(endpoint, {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      }
+    })
+      .then(response => (response.json()))
+      .then(data => {
+        this.setState({
+          people: data.result
+        })
+      })
+  }
+
+
+
+  // renderPeople = ({ name, height }) => <div key={name}>{name}: {height}</div>
+
+
+  renderList() {
+    const { people } = this.state;
     return (
-      <div className='content'>
-        <div className='content-headline'>Search for the characters of you favorite Star Wars movie! </div>
-        <div className='content-headline'>Search by the title or episode! </div>
-        <form>
-          <label>
-            <div className='content-searchBox'>Input word(s) from Star Wars movie title:</div>
-            <input type="text" name="name" />
-          </label>
-          <button onClick={this.toggleButton}>
-            {this.state.isOrderAsc ? 'ASC' : 'DESC'}
-          </button>
-        </form>
+      <div>
+        {
+          this.state.people &&
+          people.map(person => {
+            return (
+              <div className=''>
+                {`${person.name} - ${person.height}`}
+              </div>
+            )
+          })
+        }
       </div>
     )
   }
+
+  render() {
+    return (
+      <div className='content'>
+        <div className='content-headline'>Want to know what are the characters on each Star Wars movie? </div>
+        <div className='content-headline'>Search using a word from the title your favorite episode! </div>
+        {
+          <>
+            <label className='content-input'>
+              <div className='content-input--title'>Search word</div>
+              <input type="text" value={this.state.value} onChange={this.handleChange} />
+            </label>
+            <input type="submit" value="search" onClick={this.searchData} />
+            <button onClick={this.toggleButton}>
+              {this.state.order}
+            </button>
+          </>
+        }
+        <div className='content-list'>
+          {this.renderList()}
+        </div>
+      </div>
+    )
+  }
+
+
 }
