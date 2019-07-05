@@ -31,12 +31,13 @@ export default class Content extends Component {
     if (this.state.order === 'ASC') {
       this.setState({
         order: 'DESC'
-      })
+      }, this.searchData)
     } else {
       this.setState({
         order: 'ASC'
-      })
+      }, this.searchData)
     }
+
   }
 
   searchData = () => {
