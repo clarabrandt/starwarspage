@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react'
+import React, { Component } from 'react'
 import "./Content.css"
 
 export default class Content extends Component {
@@ -14,7 +14,6 @@ export default class Content extends Component {
     };
 
     this.handleChange = this.handleChange.bind(this);
-    // this.handleSubmit = this.handleSubmit.bind(this);
     this.toggleButton = this.toggleButton.bind(this);
     this.searchData = this.searchData.bind(this);
     this.renderList = this.renderList.bind(this);
@@ -26,16 +25,6 @@ export default class Content extends Component {
       value: event.target.value
     });
   }
-
-  // handleSubmit(event) {
-  //   console.log('A name was submitted: ' + this.state.value);
-  //   event.preventDefault();
-  //   this.setState({
-  //     value: event.target.value
-  //   });
-  //   console.log(this.state.value)
-  // }
-
 
   toggleButton(e) {
     e.preventDefault();
@@ -49,8 +38,6 @@ export default class Content extends Component {
       })
     }
   }
-
-
 
   searchData = () => {
     const endpoint = `http://localhost:3000/api/search?q=${this.state.value}&order=${this.state.order}`;
@@ -68,11 +55,6 @@ export default class Content extends Component {
         })
       })
   }
-
-
-
-  // renderPeople = ({ name, height }) => <div key={name}>{name}: {height}</div>
-
 
   renderList() {
     const { people } = this.state;
@@ -115,6 +97,4 @@ export default class Content extends Component {
       </div>
     )
   }
-
-
 }
